@@ -134,7 +134,7 @@ if __name__ == '__main__':
     parser.add_argument('--val_step', default=500, type=int,
                         help='number of steps to run validation')
     parser.add_argument('--logger_name', default='../output/',
-                        help='path to save the model and tensorboard log')
+                        help='path to save the model and log')
     parser.add_argument('--img_dim', default=2048, type=int,
                         help='dimensionality of the image embedding')
     parser.add_argument('--no_imgnorm', action='store_true',

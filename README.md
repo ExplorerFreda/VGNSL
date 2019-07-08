@@ -9,9 +9,7 @@
 [[bib]](https://ttic.uchicago.edu/~freda/bib/shi+mao+gimpel+livescu-ACL2019.bib)
 
 ## Requirements
-PyTorch >= 1.0.1 \
-tensorboard >= 1.13.1 
-
+PyTorch >= 1.0.1 
 
 See also [env/conda_env.txt](./blob/master/env/conda_env.txt) for detailed (but maybe not necessary) environment setup. 
 

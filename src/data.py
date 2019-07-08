@@ -4,7 +4,6 @@ import os
 
 import torch
 import torch.utils.data as data
-import torchvision.transforms as transforms
 
 
 class PrecompDataset(data.Dataset):
