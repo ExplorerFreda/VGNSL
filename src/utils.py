@@ -52,7 +52,7 @@ def tree2str(tree):
 def make_embeddings(opt, vocab_size, dim):
     init_embeddings = None
     if hasattr(opt, 'vocab_init_embeddings'):
-        init_embeddings = torch.tensor(io.load(opt.vocab_init_embeddings))
+        init_embeddings = torch.tensor(torch.load(opt.vocab_init_embeddings))
 
     emb = None
     if opt.init_embeddings_type in ('override', 'partial'):
@@ -231,3 +231,4 @@ def clean_tree(sentence, remove_tag_set={'<start>', '<end>', '<pad>'}):
                 stack = stack[:pos] + [' '.join(['('] + stack[pos+1:] + [')'])]
     assert len(stack) == 1
     return stack[0]
+
