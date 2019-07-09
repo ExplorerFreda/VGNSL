@@ -62,14 +62,9 @@ If you found the codebase useful, please consider citing
 ```
 
 ## Acknowledgement
-The visual-semantic embedding part of the code is adapted from the codebase of  
-[VSE++](https://github.com/fartashf/vsepp) (Faghri et al., BMVC 2018)
-and 
-[VSE-C](https://github.com/ExplorerFreda/VSE-C) (Shi et al., COLING 2018).
-We also thank 
-[Victor Silva](http://www.victorssilva.com/)
-for providing the original 
-[concreteness estimation codebase](https://github.com/victorssilva/concreteness) (Hessel et al., NAACL-HLT 2018). 
+The visual-semantic embedding part is adapted from the codebase of [VSE++](https://github.com/fartashf/vsepp) (Faghri et al., BMVC 2018) and [VSE-C](https://github.com/ExplorerFreda/VSE-C) (Shi et al., COLING 2018).
+Part of the basic code is adapated from Jiayuan's personal Python toolkits [Jacinle](https://github.com/vacancy/Jacinle/) and Freda's toolkits [Witter](https://github.com/explorerfreda/witter/). 
+We also thank [Victor Silva](http://www.victorssilva.com/) for providing the original [concreteness estimation codebase](https://github.com/victorssilva/concreteness) (Hessel et al., NAACL-HLT 2018). 
 
 ## License
 MIT  
