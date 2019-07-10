@@ -8,6 +8,8 @@
 [[project page]](https://ttic.uchicago.edu/~freda/project/vgnsl/)
 [[bib]](https://ttic.uchicago.edu/~freda/file/bib/shi2019visually.bib)
 
+![model.jpg](https://ttic.uchicago.edu/~freda/project/vgnsl/model.jpg)
+
 ## Requirements
 PyTorch >= 1.0.1 
 
