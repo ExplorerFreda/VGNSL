@@ -3,7 +3,7 @@
 [Freda Shi](https://ttic.uchicago.edu/~freda), [Jiayuan Mao](http://jiayuanm.com), 
 [Kevin Gimpel](https://ttic.uchicago.edu/~kgimpel), [Karen Livescu](https://ttic.uchicago.edu/~klivescu)
 
-**ACL 2019** &nbsp; 
+**ACL 2019** &nbsp; **Best Paper Nominee**
 [[paper]](https://ttic.uchicago.edu/~freda/paper/shi2019visually.pdf) 
 [[project page]](https://ttic.uchicago.edu/~freda/project/vgnsl/)
 [[bib]](https://ttic.uchicago.edu/~freda/file/bib/shi2019visually.bib)
