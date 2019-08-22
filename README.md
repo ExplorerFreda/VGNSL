@@ -36,6 +36,11 @@ data
 
 
 ## Training
+
+Note: The demos are **NOT** used to reproduce the numbers reported in the ACL paper. 
+To reproduce the results, we need to train multiple models and do self F1 driven model selection (see Section 4.7 for details).
+To get roughly similar numbers to the ones reported in the paper, take the 6th or 7th checkpoint of VG-NSL and the checkpoints after 20 epochs for VG-NSL+HI. 
+
 VG-NSL
 ```
 bash demos/demo_train.sh
