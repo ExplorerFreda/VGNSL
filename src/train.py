@@ -185,11 +185,6 @@ if __name__ == '__main__':
     logger.addHandler(console)
     logger.propagate = False
 
-    # set up random seeds (TODO: delete them)
-    torch.manual_seed(1111)
-    if torch.cuda.is_available():
-        torch.cuda.manual_seed(1111)
-
     # load predefined vocabulary and pretrained word embeddings if applicable
     vocab = pickle.load(open(os.path.join(opt.data_path, 'vocab.pkl'), 'rb'))
     opt.vocab_size = len(vocab)
