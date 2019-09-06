@@ -1,6 +1,6 @@
 # [Visually Grounded Neural Syntax Acquisition](https://ttic.uchicago.edu/~freda/paper/shi2019visually.pdf)
 
-[Freda Shi](https://ttic.uchicago.edu/~freda), [Jiayuan Mao](http://jiayuanm.com), 
+[Freda Shi](https://ttic.uchicago.edu/~freda)\*, [Jiayuan Mao](http://jiayuanm.com)\*, 
 [Kevin Gimpel](https://ttic.uchicago.edu/~kgimpel), [Karen Livescu](https://ttic.uchicago.edu/~klivescu)
 
 **ACL 2019** &nbsp; **Best Paper Nominee**
