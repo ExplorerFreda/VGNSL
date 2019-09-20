@@ -1,9 +1,9 @@
 # [Visually Grounded Neural Syntax Acquisition](https://ttic.uchicago.edu/~freda/paper/shi2019visually.pdf)
 
-[Freda Shi](https://ttic.uchicago.edu/~freda), [Jiayuan Mao](http://jiayuanm.com), 
+[Freda Shi](https://ttic.uchicago.edu/~freda)\*, [Jiayuan Mao](http://jiayuanm.com)\*, 
 [Kevin Gimpel](https://ttic.uchicago.edu/~kgimpel), [Karen Livescu](https://ttic.uchicago.edu/~klivescu)
 
-**ACL 2019** &nbsp; 
+**ACL 2019** &nbsp; **Best Paper Nominee**
 [[paper]](https://ttic.uchicago.edu/~freda/paper/shi2019visually.pdf) 
 [[project page]](https://ttic.uchicago.edu/~freda/project/vgnsl/)
 [[bib]](https://ttic.uchicago.edu/~freda/file/bib/shi2019visually.bib)
@@ -36,6 +36,12 @@ data
 
 
 ## Training
+
+Note: The demos are **NOT** used to reproduce the numbers reported in the ACL paper. 
+To reproduce the results, we need to train multiple models and do self F1 driven model selection (see Section 4.7 for details).
+To get roughly similar numbers to the ones reported in the paper, take the 6th or 7th checkpoint of VG-NSL and the checkpoints after 20 epochs for VG-NSL+HI. 
+Thanks to [Nori](https://kojimano.github.io/) for bringing this into our attention. 
+
 VG-NSL
 ```
 bash demos/demo_train.sh
