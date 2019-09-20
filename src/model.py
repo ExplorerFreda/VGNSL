@@ -344,8 +344,7 @@ class VGNSL(object):
 
             this_matching_loss = self.loss_criterion(img_emb, cap_emb)
             matching_loss += this_matching_loss.sum() + left_reg.sum() + right_reg.sum()
-        reward_matrix = (left_reg_matrix + 1.0) * reward_matrix \
-            / (self.lambda_hi * right_reg_matrix + 1.0)
+        reward_matrix = reward_matrix / (self.lambda_hi * right_reg_matrix + 1.0)
         reward_matrix = self.vse_reward_alpha * reward_matrix
 
         return reward_matrix, matching_loss
