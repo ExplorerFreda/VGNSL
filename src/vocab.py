@@ -1,15 +1,12 @@
 # Create a vocabulary wrapper
-import nltk
-import pickle
-from collections import Counter
-from pycocotools.coco import COCO
+
 class Vocabulary(object):
     """Simple vocabulary wrapper."""
 
     def __init__(self):
-        self.word2idx = {}
-        self.idx2word = {}
-        self.idx = 0
+        self.word2idx = {'<unk>': 0}
+        self.idx2word = {0: '<unk>'}
+        self.idx = 1
 
     def add_word(self, word):
         if word not in self.word2idx:

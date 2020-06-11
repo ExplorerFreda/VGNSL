@@ -1,6 +1,7 @@
 import nltk
 import numpy as np
 import os
+import pickle
 
 import torch
 import torch.utils.data as data
@@ -21,6 +22,11 @@ class PrecompDataset(data.Dataset):
             f.close()
         self.length = len(self.captions)
 
+        # audios
+        with open(os.path.join(data_path, f'{data_split}_mfcc.pkl'), 'rb') as f:
+            self.audio = pickle.load(f)
+        self.mfcc_dim = self.audio[0][0].shape[-1]
+
         # image features
         if load_img:
             self.images = np.load(os.path.join(data_path, f'{data_split}_ims.npy'))
@@ -29,6 +35,7 @@ class PrecompDataset(data.Dataset):
         
         # each image can have 1 caption or 5 captions 
         if self.images.shape[0] != self.length:
+            print(self.images.shape, self.length)
             self.im_div = 5
             assert self.images.shape[0] * 5 == self.length
         else:
@@ -42,7 +49,11 @@ class PrecompDataset(data.Dataset):
         caption = [self.vocab(token) 
                    for token in ['<start>'] + self.captions[index] + ['<end>']]
         caption = torch.tensor(caption)
-        return image, caption, index, img_id
+        # audio 
+        audio = [np.zeros((1, self.mfcc_dim))] + self.audio[index] + [np.zeros((1, self.mfcc_dim))]
+        while len(audio) < len(caption):
+            audio += [np.zeros((1, self.mfcc_dim))]
+        return image, caption, audio, index, img_id
 
     def __len__(self):
         return self.length
@@ -53,14 +64,25 @@ def collate_fn(data):
     # sort a data list by caption length
     data.sort(key=lambda x: len(x[1]), reverse=True)
     zipped_data = list(zip(*data))
-    images, captions, ids, img_ids = zipped_data
+    images, captions, audios, ids, img_ids = zipped_data
     images = torch.stack(images, 0)
     targets = torch.zeros(len(captions), len(captions[0])).long()
     lengths = [len(cap) for cap in captions]
     for i, cap in enumerate(captions):
         end = len(cap)
         targets[i, :end] = cap[:end]
-    return images, targets, lengths, ids
+    max_word_length = 0
+    for sent in audios:
+        for word in sent:
+            max_word_length = max(max_word_length, len(word))
+    target_audios = torch.zeros(len(captions), len(captions[0]), max_word_length, word.shape[-1]).float()
+    audio_masks = torch.zeros(target_audios.shape).float()
+    for i, sent in enumerate(audios):
+        for j, word in enumerate(sent):
+            end = len(word)
+            target_audios[i, j, :end, :] = torch.from_numpy(word[:end, :])
+            audio_masks[i, j, :end, :] = 1
+    return images, targets, target_audios, audio_masks, lengths, ids
 
 
 def get_precomp_loader(data_path, data_split, vocab, batch_size=128,

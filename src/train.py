@@ -117,9 +117,9 @@ if __name__ == '__main__':
                         help='number of training epochs')
     parser.add_argument('--batch_size', default=128, type=int,
                         help='size of a training mini-batch')
-    parser.add_argument('--word_dim', default=512, type=int,
+    parser.add_argument('--word_dim', default=20, type=int,
                         help='dimensionality of the word embedding')
-    parser.add_argument('--embed_size', default=512, type=int,
+    parser.add_argument('--embed_size', default=20, type=int,
                         help='dimensionality of the joint embedding')
     parser.add_argument('--grad_clip', default=2., type=float,
                         help='gradient clipping threshold')
@@ -166,6 +166,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--lambda_hi', type=float, default=0,
                         help='penalization for head-initial inductive bias')
+    parser.add_argument('--mfcc_dim', type=int, default=20)
     opt = parser.parse_args()
 
     # setup logger

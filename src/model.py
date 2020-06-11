@@ -68,7 +68,7 @@ class EncoderText(nn.Module):
         self.vocab_size = vocab_size
         self.semantics_dim = semantics_dim
 
-        self.sem_embedding = make_embeddings(opt, self.vocab_size, self.semantics_dim)
+        self.sem_embedding = nn.Linear(semantics_dim, semantics_dim, bias=False)
         self.syn_score = nn.Sequential(
             nn.Linear(opt.syntax_dim * 2, opt.syntax_score_hidden),
             nn.ReLU(),
@@ -79,7 +79,7 @@ class EncoderText(nn.Module):
     def reset_weights(self):
         self.sem_embedding.weight.data.uniform_(-0.1, 0.1)
 
-    def forward(self, x, lengths, volatile=False):  
+    def forward(self, x, lengths, volatile=False, audio_masks=None):  
         """ sample a tree for each sentence """
         max_select_cnt = int(lengths.max(dim=0)[0].item()) - 1
 
@@ -95,7 +95,10 @@ class EncoderText(nn.Module):
             0, max_select_cnt + 1, dtype=torch.long, device=x.device), 0, x.size(0))
         right_bounds = left_bounds
 
-        sem_embeddings = self.sem_embedding(x)
+        assert audio_masks is not None
+        if torch.cuda.is_available():
+            audio_masks = audio_masks.cuda()
+        sem_embeddings = (self.sem_embedding(x) - 1e10 * (1 - audio_masks)).max(-2)[0]
         syn_embeddings = sem_embeddings
 
         output_word_embeddings = sem_embeddings * \
@@ -249,7 +252,7 @@ class VGNSL(object):
         self.img_enc = EncoderImagePrecomp(
             opt.img_dim, opt.embed_size, opt.no_imgnorm
         )
-        self.txt_enc = EncoderText(opt, opt.vocab_size, opt.word_dim)
+        self.txt_enc = EncoderText(opt, opt.vocab_size, opt.mfcc_dim)
 
         if torch.cuda.is_available():
             self.img_enc.cuda()
@@ -291,7 +294,7 @@ class VGNSL(object):
         self.img_enc.eval()
         self.txt_enc.eval()
 
-    def forward_emb(self, images, captions, lengths, volatile=False):
+    def forward_emb(self, images, captions, lengths, volatile=False, audio_masks=None):
         """Compute the image and caption embeddings
         """
         # Set mini-batch dataset
@@ -300,7 +303,7 @@ class VGNSL(object):
             captions = captions.cuda()
         with torch.set_grad_enabled(not volatile):
             img_emb = self.img_enc(images)
-            txt_outputs= self.txt_enc(captions, lengths, volatile)
+            txt_outputs= self.txt_enc(captions, lengths, volatile, audio_masks=audio_masks)
         return (img_emb, ) + txt_outputs
 
     def forward_reward(self, base_img_emb, cap_span_features, left_span_features, right_span_features,
@@ -349,7 +352,7 @@ class VGNSL(object):
 
         return reward_matrix, matching_loss
 
-    def train_emb(self, images, captions, lengths, ids=None, epoch=None, *args):
+    def train_emb(self, images, captions, audios, audio_masks, lengths, ids=None, epoch=None, *args):
         """ one training step given images and captions """
         self.Eiters += 1
         self.logger.update('Eit', self.Eiters)
@@ -360,7 +363,7 @@ class VGNSL(object):
 
         # compute the embeddings
         img_emb, cap_span_features, left_span_features, right_span_features, word_embs, tree_indices, probs, \
-            span_bounds = self.forward_emb(images, captions, lengths)
+            span_bounds = self.forward_emb(images, audios, lengths, audio_masks=audio_masks)
 
         # measure accuracy and record loss
         cum_reward, matching_loss = self.forward_reward(
