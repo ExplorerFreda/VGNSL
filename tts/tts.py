@@ -23,8 +23,5 @@ if __name__ == '__main__':
             text = text.strip()
             text = ''.join(filter(lambda x: x not in banned_chars, text))
             speech_file_path = os.path.join(args.output_path, f'{i:05d}.wav')
-            try:
-                if not os.path.exists(speech_file_path):
-                    tts.tts_to_file(text, file_path=speech_file_path)
-            except:
-                from IPython import embed; embed(using=False)
+            if not os.path.exists(speech_file_path):
+                tts.tts_to_file(text, file_path=speech_file_path)
