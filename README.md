@@ -4,11 +4,8 @@
 [Kevin Gimpel](https://ttic.uchicago.edu/~kgimpel), [Karen Livescu](https://ttic.uchicago.edu/~klivescu)
 
 **ACL 2019** &nbsp; **Best Paper Nominee**
-[[paper]](https://ttic.uchicago.edu/~freda/paper/shi2019visually.pdf) 
-[[project page]](https://ttic.uchicago.edu/~freda/project/vgnsl/)
+[[paper]](https://aclanthology.org/P19-1180.pdf) 
 [[bib]](https://ttic.uchicago.edu/~freda/file/bib/shi2019visually.bib)
-
-![model.jpg](https://ttic.uchicago.edu/~freda/project/vgnsl/model.jpg)
 
 ## Requirements
 PyTorch >= 1.0.1 
