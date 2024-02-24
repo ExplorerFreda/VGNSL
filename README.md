@@ -5,7 +5,6 @@
 
 **ACL 2019** &nbsp; **Best Paper Nominee**
 [[paper]](https://aclanthology.org/P19-1180.pdf) 
-[[bib]](https://ttic.uchicago.edu/~freda/file/bib/shi2019visually.bib)
 
 ## Requirements
 PyTorch >= 1.0.1 
